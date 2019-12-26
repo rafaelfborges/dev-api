@@ -34,8 +34,19 @@ class Desenvolvedor(Resource):
         desenvolvedores.pop(id)
         return {'status': 'sucesso', 'mensagem': 'Registro excluído'}
 
-api.add_resource(Desenvolvedor, '/dev/<int:id>/')
+class ListaDesenvolvedores(Resource):
+    def get(self):
+        return desenvolvedores
 
+    def post(self):
+        dados = json.loads(request.data)
+        posicao = len(desenvolvedores)
+        dados['id'] = posicao
+        desenvolvedores.append(dados)
+        return desenvolvedores[posicao]
+
+api.add_resource(Desenvolvedor, '/dev/<int:id>/')
+api.add_resource(ListaDesenvolvedores, '/dev/')
 
 if __name__ == '__main__':
     app.run()
