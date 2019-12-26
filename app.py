@@ -6,8 +6,7 @@ desenvolvedores = [
     {'nome':'Rafael','habilidades': ['Python','Flask']},{'nome':'Borges','habilidades': ['Python','Django']}
 ]
 
-# Implementa um método 'get' para devolver um desenvolvedor pelo ID
-# também um método 'put' e 'delete' para alterar e deletar o desenvolvedor.
+# Implementa método para devolver, alterar e deletar um desenvolvedor pelo id
 @app.route('/dev/<int:id>/', methods=['GET', 'PUT', 'DELETE'])
 def desenvolvedor(id):
     if request.method == 'GET':
@@ -27,6 +26,14 @@ def desenvolvedor(id):
     elif request.method == 'DELETE':
         desenvolvedores.pop(id)
         return jsonify({'status':'sucesso', 'mensagem':'Registro excluído'})
+
+# Implementa método para listar desenvolvedores e registrar um novo desenvolvedor
+@app.route('/dev/', methods=['POST', 'GET'])
+def lista_desenvolvedores():
+    if request.method == 'POST':
+        dados = json.loads(request.data)
+        desenvolvedores.append(dados)
+        return jsonify({'status': 'sucesso', 'mensagem': 'Registro inserido'})
 
 if __name__ == '__main__':
     app.run()
