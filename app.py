@@ -3,8 +3,14 @@ from flask import Flask, jsonify, request, json
 app = Flask(__name__)
 
 desenvolvedores = [
-    {'id':0, 'nome':'Rafael','habilidades': ['Python','Flask']},{'id':1,'nome':'Borges','habilidades': ['Python','Django']}
+    {
+        'id': 0, 'nome': 'Rafael', 'habilidades': ['Python', 'Flask']
+    }
+    , {
+        'id': 1, 'nome': 'Borges', 'habilidades': ['Python', 'Django']
+    }
 ]
+
 
 # Implementa método para devolver, alterar e deletar um desenvolvedor pelo id
 @app.route('/dev/<int:id>/', methods=['GET', 'PUT', 'DELETE'])
@@ -25,7 +31,8 @@ def desenvolvedor(id):
         return jsonify(dados)
     elif request.method == 'DELETE':
         desenvolvedores.pop(id)
-        return jsonify({'status':'sucesso', 'mensagem':'Registro excluído'})
+        return jsonify({'status': 'sucesso', 'mensagem': 'Registro excluído'})
+
 
 # Implementa método para listar desenvolvedores e registrar um novo desenvolvedor
 @app.route('/dev/', methods=['POST', 'GET'])
@@ -38,6 +45,7 @@ def lista_desenvolvedores():
         return jsonify(desenvolvedores[posicao])
     elif request.method == 'GET':
         return jsonify(desenvolvedores)
+
 
 if __name__ == '__main__':
     app.run()
