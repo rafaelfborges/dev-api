@@ -3,7 +3,7 @@ from flask import Flask, jsonify, request, json
 app = Flask(__name__)
 
 desenvolvedores = [
-    {'nome':'Rafael','habilidades': ['Python','Flask']},{'nome':'Borges','habilidades': ['Python','Django']}
+    {'id':0, 'nome':'Rafael','habilidades': ['Python','Flask']},{'id':1,'nome':'Borges','habilidades': ['Python','Django']}
 ]
 
 # Implementa método para devolver, alterar e deletar um desenvolvedor pelo id
@@ -32,8 +32,12 @@ def desenvolvedor(id):
 def lista_desenvolvedores():
     if request.method == 'POST':
         dados = json.loads(request.data)
+        posicao = len(desenvolvedores)
+        dados['id'] = posicao
         desenvolvedores.append(dados)
-        return jsonify({'status': 'sucesso', 'mensagem': 'Registro inserido'})
+        return jsonify(desenvolvedores[posicao])
+    elif request.method == 'GET':
+        return jsonify(desenvolvedores)
 
 if __name__ == '__main__':
     app.run()
